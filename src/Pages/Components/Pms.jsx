@@ -76,13 +76,28 @@ const SelectboxBtn = styled.button`
   }
 `;
 
+
 export const Pms = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '물 한 잔 마시기',
+    '진통제 먹기',
+    '전화 알림 끄기',
+    '핫초코 마시기',
+    '낮잠 자기',
+    '간식 준비',
+    '영화 보기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
+  };
+
+  const handleAddAllClick = () => {
+    routineItems.forEach(item => handleAddClick(item));
   };
 
   const handleCloseModal = () => {
@@ -94,35 +109,22 @@ export const Pms = () => {
     <MainBox>
       <MTxt1>자기관리 (PMS)</MTxt1>
       <MTxt2>소파에 누워 편안한 시간을 보내는 것도 좋아요.</MTxt2>
+
       <Selectbox>
-        <Txtbox>물 한 잔 마시기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('물 한 잔 마시기')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>진통제 먹기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('진통제 먹기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>전화 알림 끄기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('전화 알림 끄기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>핫초코 마시기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('핫초코 마시기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>낮잠 자기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('낮잠 자기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>간식 준비</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('간식 준비')}>준비</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>영화 보기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('영화 보기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+     {routineItems.map(item => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };

@@ -77,61 +77,60 @@ const SelectboxBtn = styled.button`
     
 `;
 
+
 export const Depression1 = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
+
+  const routineItems = [
+    '침대 정리',
+    '커튼 열기',
+    '창문 열기',
+    '물 마시기',
+    '이 닦기',
+    '감정 적기',
+    '오늘의 작은 목표 적어보기',
+    '호흡 운동하기',
+  ];
 
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
   };
 
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
+  };
+
   const handleCloseModal = () => {
+    setSelectedRoutine('');
     setShowModal(false);
-    setSelectedRoutine(''); // Reset selectedRoutine when closing modal
   };
 
   return (
     <MainBox>
       <MTxt1>우울증 완화</MTxt1>
       <MTxt2>
-      어두운 밤에서 새벽을 지나 아침이라는 밝은 빛이  <br />
-      당신을 맞이하고 있어요<br />
-      당신이 무엇을 하든 일이 잘 되게 해줄거예요
+        어두운 밤에서 새벽을 지나 아침이라는 밝은 빛이<br />
+        당신을 맞이하고 있어요<br />
+        당신이 무엇을 하든 일이 잘 되게 해줄 거예요
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>침대 정리</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("침대 정리")}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>커튼 열기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("커튼 열기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>창문 열기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("창문 열기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>물 마시기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("물 마시기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>이 닦기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("이 닦기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>감정 적기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("감정 적기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>오늘의 작은 목표 적어보기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("오늘의 작은 목표 적어보기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>호흡 운동하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("호흡 운동하기")}>추가</SelectboxBtn>
-      </Selectbox>
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
       {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
     </MainBox>
   );
 };
+
+export default Depression1;

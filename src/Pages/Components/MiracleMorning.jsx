@@ -98,14 +98,25 @@ const SelectAll = styled.button`
     }
 `;
 
-
 export const MiracleMorning = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '잠자리 정리',
+    '환기 시키기',
+    '산책 혹은 런닝머신',
+    '샤워하기',
+    '독서하기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
+  };
+
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
   };
 
   const handleCloseModal = () => {
@@ -117,30 +128,27 @@ export const MiracleMorning = () => {
     <MainBox>
       <MTxt1>미라클 모닝</MTxt1>
       <MTxt2>
-      스스로 정한 시간에 일어나서 하루를 시작해보면 어떨까요? <br />
+        스스로 정한 시간에 일어나서 하루를 시작해보면 어떨까요? <br />
         당신 인생의 터닝포인트가 될 거예요
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>잠자리 정리</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('잠자리 정리')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>환기 시키기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('환기 시키기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>산책 혹은 런닝머신</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('산책 혹은 런닝머신')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>샤워하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('샤워하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>독서하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('독서하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };
+
+export default MiracleMorning;

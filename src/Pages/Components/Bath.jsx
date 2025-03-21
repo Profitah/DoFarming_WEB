@@ -1,7 +1,6 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import Modal from './Modal';
 import styled from 'styled-components';
-
 
 const MainBox = styled.div`
   border: 0.2px solid rgb(131, 131, 131);
@@ -81,9 +80,21 @@ export const Bath = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '반신욕 물 받기',
+    '머리 빗기',
+    '반신욕',
+    '미지근한 물 마시기',
+    '팩 하기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
+  };
+
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
   };
 
   const handleCloseModal = () => {
@@ -95,31 +106,26 @@ export const Bath = () => {
     <MainBox>
       <MTxt1>따뜻한 반신욕</MTxt1>
       <MTxt2>
-      오늘 하루 수고많았을 당신 
+        오늘 하루 수고많았을 당신 
         <br />
         따뜻한 물에서 하루의 노곤함을 풀어보는게 어때요?
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>반신욕 물 받기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('반신욕 물 받기')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>머리 빗기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('머리 빗기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>반신욕</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('반신욕')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>미지근한 물 마시기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('미지근한 물 마시기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>팩 하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('팩 하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };

@@ -102,49 +102,54 @@ export const Jogging = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '물 마시기',
+    '간단한 간식 섭취',
+    '이어폰, 물 챙기기',
+    '워밍업 스트레칭',
+    '러닝',
+    '샤워하기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
+  };
+
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
-
   return (
     <MainBox>
       <MTxt1>상쾌한 조깅</MTxt1>
       <MTxt2>
-      바람이 불어와 마음을 가볍게 만들어주는, <br />
-      상쾌한 조깅으로 시작하는 건 어떨까요? <br />
-      일상을 떠나 새로운 에너지를 만들어봐요
+        바람이 불어와 마음을 가볍게 만들어주는, <br />
+        상쾌한 조깅으로 시작하는 건 어떨까요? <br />
+        일상을 떠나 새로운 에너지를 만들어봐요
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>물 마시기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('물 마시기')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>간단한 간식 섭취</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('간단한 간식 섭취')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>이어폰, 물 챙기기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('이어폰, 물 챙기기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>워밍업 스트레칭</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('워밍업 스트레칭')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>러닝</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('러닝')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>샤워하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('샤워하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };
+
+export default Jogging;

@@ -102,45 +102,53 @@ export const Insomnia = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '아로마 오일 + 가습기 켜기',
+    '조명 어둡게',
+    '따뜻한 차 마시기',
+    '가벼운 스트레칭',
+    'ASMR 듣기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
   };
 
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
+  };
+
   const handleCloseModal = () => {
+    setSelectedRoutine('');
     setShowModal(false);
   };
 
   return (
     <MainBox>
-      <MTxt1>
-        불면증 극복
-      </MTxt1>
+      <MTxt1>불면증 극복</MTxt1>
       <MTxt2>
-      매일 밤, 편안하게 잠들어 새로운 하루를 맞이해보세요.<br />
-      몸과 마음을 편하게 가다듬어 보는 건 어떨까요?
+        매일 밤, 편안하게 잠들어 새로운 하루를 맞이해보세요.<br />
+        몸과 마음을 편하게 가다듬어 보는 건 어떨까요?
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>아로마 오일 + 가습기 켜기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('아로마 오일 + 가습기 켜기')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>조명 어둡게</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('조명 어둡게')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>따뜻한 차 마시기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('따뜻한 차 마시기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>가벼운 스트레칭</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('가벼운 스트레칭')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>ASMR 듣기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('ASMR 듣기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };
+
+export default Insomnia;

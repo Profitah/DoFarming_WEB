@@ -102,9 +102,21 @@ export const Frustration = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '호흡 운동하기',
+    '친구나 가족에게 전화하기',
+    '감정 적기',
+    '기대나 긍정적인 생각 적기',
+    '취미 시간 갖기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
+  };
+
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
   };
 
   const handleCloseModal = () => {
@@ -116,28 +128,22 @@ export const Frustration = () => {
     <MainBox>
       <MTxt1>좌절감이 들 때</MTxt1>
       <MTxt2>
-      당신의 성장과 배움의 일부로 일시적인 순간 일 뿐이에요. <br /> 자신을 다시 찾는 과정에서 더욱 강해질거에요.
+        당신의 성장과 배움의 일부로 일시적인 순간일 뿐이에요. <br />
+        자신을 다시 찾는 과정에서 더욱 강해질 거예요.
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>호흡 운동하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('호흡 운동하기')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>친구나 가족에게 전화하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('친구나 가족에게 전화하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>감정 적기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('감정 적기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>기대나 긍정적인 생각 적기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('기대나 긍정적인 생각 적기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>취미 시간 갖기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('취미 시간 갖기')}>추가</SelectboxBtn>
-      </Selectbox>
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
       {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
     </MainBox>
   );

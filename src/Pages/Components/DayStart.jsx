@@ -97,14 +97,25 @@ const SelectAll = styled.button`
       margin-left: 16vw;
     }
 `;
-
 export const DayStart = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '물 마시기',
+    '명상',
+    '오늘 하루 계획 세우기',
+    '옷 갈아입기',
+    '샤워하기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
+  };
+
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
   };
 
   const handleCloseModal = () => {
@@ -116,33 +127,30 @@ export const DayStart = () => {
     <MainBox>
       <MTxt1>하루의 시작</MTxt1>
       <MTxt2>
-      어두운 밤에서 새벽을 지나 아침이라는 밝은 빛이
+        어두운 밤에서 새벽을 지나 아침이라는 밝은 빛이
         <br />
         당신을 맞이하고 있어요
         <br />
         당신이 무엇을 하든 일이 잘 되게 해줄거예요
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>물 마시기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('물 마시기')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>명상</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('명상')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>오늘 하루 계획 세우기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('오늘 하루 계획 세우기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>옷 갈아입기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('옷 갈아입기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>샤워하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('샤워하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };
+
+export default DayStart;

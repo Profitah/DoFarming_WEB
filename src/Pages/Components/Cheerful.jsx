@@ -81,9 +81,21 @@ export const Cheerful = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '비타민 섭취',
+    '햇빛 보기',
+    '스트레칭 하기',
+    '오늘 할 일 체크하기',
+    '밖으로 나가기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
+  };
+
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
   };
 
   const handleCloseModal = () => {
@@ -95,30 +107,25 @@ export const Cheerful = () => {
     <MainBox>
       <MTxt1>활기찬 아침</MTxt1>
       <MTxt2>
-      웃음으로 시작해 웃음으로 끝내면 그 하루는 <br />
-      어느 때보다 행복할거에요.
+        웃음으로 시작해 웃음으로 끝내면 그 하루는 <br />
+        어느 때보다 행복할거에요.
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>비타민 섭취</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('비타민 섭취')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>햇빛 보기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('햇빛 보기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>스트레칭 하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('스트레칭 하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>오늘 할 일 체크하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('오늘 할 일 체크하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>밖으로 나가기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('밖으로 나가기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };

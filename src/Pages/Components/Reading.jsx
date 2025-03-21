@@ -102,45 +102,51 @@ export const Reading = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '마실 차 준비',
+    '노트와 펜 준비하기',
+    '스탠드 조명 켜기',
+    '책 읽기',
+    '필사하기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
   };
 
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
+  };
+
   const handleCloseModal = () => {
+    setSelectedRoutine('');
     setShowModal(false);
   };
 
   return (
     <MainBox>
-      <MTxt1>
-        잠들기 전 독서
-      </MTxt1>
+      <MTxt1>잠들기 전 독서</MTxt1>
       <MTxt2>
-      취침 30분 전에 스마트폰을 자제하는 것은 깊은 잠을<br />
-      자는 데에 좋은 효과가 있어요
+        취침 30분 전에 스마트폰을 자제하는 것은 깊은 잠을<br />
+        자는 데에 좋은 효과가 있어요
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>마실 차 준비</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('마실 차 준비')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>노트와 펜 준비하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('노트와 펜 준비하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>스탠드 조명 켜기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('스탠드 조명 켜기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>책 읽기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('책 읽기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>필사하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('필사하기')}>추가</SelectboxBtn>
-      </Selectbox>
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
       {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
     </MainBox>
   );
 };
+
+export default Reading;

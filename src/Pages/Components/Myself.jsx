@@ -102,44 +102,51 @@ export const Myself = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '좋아하는 음악 듣기',
+    '샤워하기',
+    '스킨케어하기',
+    '림프관 마사지하기',
+    '립밤 바르기',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
   };
 
+  const handleAddAllClick = () => {
+    routineItems.forEach(item => handleAddClick(item));
+  };
+
   const handleCloseModal = () => {
+    setSelectedRoutine('');
     setShowModal(false);
-    setSelectedRoutine(''); // Reset selectedRoutine when closing modal
   };
 
   return (
     <MainBox>
       <MTxt1>나를 가꾸는 시간</MTxt1>
       <MTxt2>
-      나를 돌보는 시간이 있나요? 다른 것이 아닌, 자신을 <br />
-      중심으로 루틴을 만들어보는 건 어때요?
+        나를 돌보는 시간이 있나요? 다른 것이 아닌, 자신을 <br />
+        중심으로 루틴을 만들어보는 건 어때요?
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>좋아하는 음악 듣기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("좋아하는 음악 듣기")}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>샤워하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("샤워하기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>스킨케어하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("스킨케어하기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>림프관 마사지하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("림프관 마사지하기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>립밤 바르기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("립밤 바르기")}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map(item => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };

@@ -77,7 +77,6 @@ const SelectboxBtn = styled.button`
     
 `;
 
-
 export const Family = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
@@ -90,37 +89,33 @@ export const Family = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
-
   return (
     <MainBox>
-      <MTxt1>
-        가족과의 시간
-      </MTxt1>
+      <MTxt1>가족과의 시간</MTxt1>
       <MTxt2>
-      가족과 함께 보내는 시간은 소중한 보물과도 같습니다.<br />
-      함께하는 모든 순간이 소중하고 값진 시간이 될 거에요.
+        가족과 함께 보내는 시간은 소중한 보물과도 같습니다.<br />
+        함께하는 모든 순간이 소중하고 값진 시간이 될 거예요.
       </MTxt2>
+
+      {/* 전체 선택 */}
       <Selectbox>
-        <Txtbox>가족들과 포옹하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('가족들과 포옹하기')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>오늘 어땠어? 물어보기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('오늘 어땠어? 물어보기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>저녁 식사 준비하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('저녁 식사 준비하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>가족들과 저녁 식사하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('가족들과 저녁 식사하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>고마움 표현하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('고마움 표현하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {/* 개별 루틴 항목들 */}
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };
+
+export default Family;

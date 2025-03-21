@@ -101,9 +101,21 @@ export const DayEnd = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
 
+  const routineItems = [
+    '일기쓰기',
+    '내일 입을 옷 준비',
+    '샤워',
+    '스킨 케어',
+    '취침 명상',
+  ];
+
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
+  };
+
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
   };
 
   const handleCloseModal = () => {
@@ -111,36 +123,32 @@ export const DayEnd = () => {
     setShowModal(false);
   };
 
-
   return (
     <MainBox>
       <MTxt1>하루의 마무리</MTxt1>
       <MTxt2>
-      오늘 하루도 수고 많았어요
+        오늘 하루도 수고 많았어요
         <br />
         하루를 충만하게 마무리 해보는 건 어떨까요?
       </MTxt2>
+
       <Selectbox>
-        <Txtbox>일기쓰기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('일기쓰기')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>내일 입을 옷 준비</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("내일 입을 옷 준비")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>샤워</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('샤워')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>스킨 케어</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('스킨 케어')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>취침 명상</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('취침 명상')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };
+
+export default DayEnd;

@@ -76,49 +76,54 @@ const SelectboxBtn = styled.button`
     }
     
 `;
-
 export const Depression = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState('');
+
+  const routineItems = [
+    '내 감정을 그대로 응시하기',
+    '오늘의 기분 쓰기',
+    '오늘 하루 감사일기 쓰기',
+    '좋아하는 음악 듣기',
+    '산책하기',
+  ];
 
   const handleAddClick = (routine) => {
     setSelectedRoutine(routine);
     setShowModal(true);
   };
 
+  const handleAddAllClick = () => {
+    routineItems.forEach((item) => handleAddClick(item));
+  };
+
   const handleCloseModal = () => {
+    setSelectedRoutine('');
     setShowModal(false);
   };
 
   return (
     <MainBox>
-      <MTxt1>
-        우울증 완화
-      </MTxt1>
-      <MTxt2>
-      작은 변화는 큰 변화로 이어질 거예요.
-      </MTxt2>
+      <MTxt1>우울증 완화</MTxt1>
+      <MTxt2>작은 변화는 큰 변화로 이어질 거예요.</MTxt2>
+
       <Selectbox>
-        <Txtbox>내 감정을 그대로 응시하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('내 감정을 그대로 응시하기<')}>추가</SelectboxBtn>
+        <Txtbox>전체 선택</Txtbox>
+        <SelectboxBtn onClick={handleAddAllClick}>추가</SelectboxBtn>
       </Selectbox>
-      <Selectbox>
-        <Txtbox>오늘의 기분 쓰기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick("오늘의 기분 쓰기")}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>오늘 하루 감사일기 쓰기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('오늘 하루 감사일기 쓰기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>좋아하는 음악 듣기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('좋아하는 음악 듣기')}>추가</SelectboxBtn>
-      </Selectbox>
-      <Selectbox>
-        <Txtbox>산책하기</Txtbox>
-        <SelectboxBtn onClick={() => handleAddClick('산책하기')}>추가</SelectboxBtn>
-      </Selectbox>
-      {showModal && <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />}
+
+      {routineItems.map((item) => (
+        <Selectbox key={item}>
+          <Txtbox>{item}</Txtbox>
+          <SelectboxBtn onClick={() => handleAddClick(item)}>추가</SelectboxBtn>
+        </Selectbox>
+      ))}
+
+      {showModal && (
+        <Modal selectedRoutine={selectedRoutine} onClose={handleCloseModal} />
+      )}
     </MainBox>
   );
 };
+
+export default Depression;
